@@ -1,0 +1,45 @@
+Some funcitons I found that were handy.  I'll keep adding new ones.
+
+def cache_interface(function, use_cache : bool, *args):
+    """
+    The cache_interface is pretty much here just for testing and will not be used in prod...
+    """
+    global CACHE_PATH
+    function_handle = function.__name__
+    cache_object = None
+    cache_file_name = function_handle + '.p'
+    cache_path_file_name = os.path.join(CACHE_PATH, cache_file_name)
+    if use_cache == True:
+        if os.path.exists(cache_path_file_name):
+            with open(cache_path_file_name, 'rb') as fin:
+                cache_object = pickle.load(fin)
+        else:
+            cache_object = function(*args)
+            with open(cache_path_file_name, 'wb') as fout:
+                pickle.dump(cache_object, fout)
+    else:
+        cache_object = function(*args)
+        with open(cache_path_file_name, 'wb') as fout:
+            pickle.dump(cache_object, fout)
+    return cache_object
+	
+def log_message(message : str, verbose_override : bool = False):
+
+    def __log_message(message : str):
+        message += '\n'
+        if os.path.exists(LOG_PATH_FILE) == True:
+            with open(LOG_PATH_FILE, 'a') as fout:
+                fout.write(message)
+        else:
+            #first time...
+            with open(LOG_PATH_FILE, 'wt') as fout:
+                header = '***************Log messages below***************\n'
+                fout.write(header)
+                date_message = 'Date log started: ' + current_full_date_time_proper_case() + '\n'
+                fout.write(date_message)
+                fout.write(message)
+    #simple way to print if verbose...one has to pass in false
+    if verbose_override == True:
+        __log_message(message)
+    elif VERBOSE == True:
+        __log_message(message)
