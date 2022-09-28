@@ -3,7 +3,7 @@ import os
 
 class PickleCache:
     """
-    A class mostly set up to avoind having to repeat passing in the cache path.  Create the class onece in code, set the cache path
+    A class mostly set up to avoind having to repeat passing in the cache path.  Create the class once in code, set the cache path
     and then use it again and again to get the pickled function results.
     Pickles a function result and returns it..I found it handy to cache results between tests with long running api calls.
     """
