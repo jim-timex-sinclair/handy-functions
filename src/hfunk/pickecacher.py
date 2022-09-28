@@ -22,7 +22,7 @@ class PickleCache:
         
     def cache_interface(self, function, use_cache : bool, *args):
         """
-        The cache_interface is pretty much here just for testing and will not be used in prod...
+        The cache_interface can be used to cache results to pickle for testing of slow running api calls.
         """
         global CACHE_PATH
         function_handle = function.__name__
